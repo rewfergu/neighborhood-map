@@ -1,4 +1,4 @@
-define(['knockout', 'viewModel', 'jquery', 'lodash', 'TweenLite', 'keys', 'Ease', 'getMap'], function(ko, viewModel, $, _, TweenLite, keys) {
+define(['knockout', 'viewModel', 'jquery', 'TweenLite', 'keys', 'Ease', 'getMap'], function(ko, viewModel, $, TweenLite, keys) {
   var url  = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + keys.flickrKey + '&has_geo=1&radius=2&radius_units=mi&extras=geo%2Curl_t%2C+url_s&format=json&nojsoncallback=1&per_page=100';
 
   // formats we aren't using at the moment
@@ -6,9 +6,10 @@ define(['knockout', 'viewModel', 'jquery', 'lodash', 'TweenLite', 'keys', 'Ease'
 
   window.markerList.flickr = [];
 
+  // marker image properties
   var FlickrMarker = function() {
     return {
-      url: 'flickr.png',
+      url: 'img/flickr.png',
       currentSize: 25,
       anchorx: 0,
       anchory: 25,
@@ -23,8 +24,9 @@ define(['knockout', 'viewModel', 'jquery', 'lodash', 'TweenLite', 'keys', 'Ease'
 
   function createMarker(name, place, url) {
     var contentString = '<div>' + name + '</div>';
-    contentString += '<img src="' + url + '" alt="flickr image">';
+    contentString += '<img src="' + url.thumb + '" alt="flickr image">';
 
+    // these properties go into the knockout observable array
     var entry = {
       title: name,
       position: place,
@@ -32,6 +34,7 @@ define(['knockout', 'viewModel', 'jquery', 'lodash', 'TweenLite', 'keys', 'Ease'
       info: contentString,
     };
 
+    // these properties go into the map marker array
     var marker = new google.maps.Marker({
       map: map,
       title: name,
@@ -39,7 +42,7 @@ define(['knockout', 'viewModel', 'jquery', 'lodash', 'TweenLite', 'keys', 'Ease'
       animation: google.maps.Animation.DROP,
       icon: markerImage,
       url: url.thumb,
-      info: contentString
+      info: contentString,
     });
 
     marker.addListener('click', function() {
@@ -48,6 +51,7 @@ define(['knockout', 'viewModel', 'jquery', 'lodash', 'TweenLite', 'keys', 'Ease'
       _this = this;
       window.infowindow.setContent(_this.info);
 
+      // greensock tweenLite properties
       var tween = TweenLite.to(markerImage, 0.75, {
         currentSize: 35,
         anchorx: 0,
@@ -62,7 +66,6 @@ define(['knockout', 'viewModel', 'jquery', 'lodash', 'TweenLite', 'keys', 'Ease'
 
     viewModel.flickrMarkers.push(entry);
     window.markerList.flickr.push(marker);
-    console.log('flickr marker added');
   }
 
   //each time the tween updates this function will be called.
@@ -70,17 +73,19 @@ define(['knockout', 'viewModel', 'jquery', 'lodash', 'TweenLite', 'keys', 'Ease'
     markerImage.size = new google.maps.Size(markerImage.currentSize, markerImage.currentSize);
     markerImage.scaledSize = new google.maps.Size(markerImage.currentSize, markerImage.currentSize);
     markerImage.anchor = new google.maps.Point(markerImage.anchorx, markerImage.anchory);
-    //marker.setIcon(markerImage);
+    marker.setIcon(markerImage);
   }
 
+  // when the tween animation finishes this will happen
   function completeMarker(marker) {
     window.infowindow.open(map, marker);
     markerImage = new FlickrMarker();
   }
 
+  // reset markers to original size
   function resetMarkers() {
-    viewModel.flickrMarkers().forEach(function(index) {
-      //index.setIcon(markerImage);
+    window.markerList.flickr.forEach(function(index) {
+      index.setIcon(markerImage);
     });
   }
 
@@ -94,18 +99,16 @@ define(['knockout', 'viewModel', 'jquery', 'lodash', 'TweenLite', 'keys', 'Ease'
 
           reject();
         }).done(function(data) {
-          //console.log(data);
           console.log('flickr data received');
 
-          // no more data.length just set a limit
-          //data.photos.photo.length
-          for (var i = 0; i < data.photos.photo.length; i++) {
-            var photo = data.photos.photo[i];
+          //for (var i = 0; i < data.photos.photo.length; i++) {
+          data.photos.photo.forEach(function(index){
+            var photo = index;
             var pos = new google.maps.LatLng(photo.latitude, photo.longitude);
             var name = photo.title;
             var url = {small: photo.url_s, thumb: photo.url_t};
             createMarker(name, pos, url);
-          }
+          });
           console.log('flickr data processed');
           resolve();
         });

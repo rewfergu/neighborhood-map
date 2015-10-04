@@ -87,20 +87,20 @@ define([
     // });
 
     // search flickr
-    // flickr.search(lat, long).then(function() {
-    //   viewModel.flickrLoaded(true);
-    //   viewModel.flickrActive(true);
-    //
-    //   imagesloaded('#flickr-container', function() {
-    //     new Packery('#flickr-container', {
-    //       // options
-    //       itemSelector: '.grid-item',
-    //       gutter: 10,
-    //     });
-    //
-    //     $('#flickr-container [data-toggle="tooltip"]').tooltip();
-    //   });
-    // });
+    flickr.search(lat, long).then(function() {
+      viewModel.flickrLoaded(true);
+      viewModel.flickrActive(true);
+
+      imagesloaded('#flickr-container', function() {
+        new Packery('#flickr-container', {
+          // options
+          itemSelector: '.grid-item',
+          gutter: 10,
+        });
+
+        $('#flickr-container [data-toggle="tooltip"]').tooltip();
+      });
+    });
   }; // end services
 
   ko.bindingHandlers.markerToggle = {

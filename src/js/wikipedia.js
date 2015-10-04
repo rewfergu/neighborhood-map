@@ -104,7 +104,6 @@ define(['knockout', 'viewModel', 'TweenLite', 'Ease', 'getMap'], function(ko, vi
           console.log('could not get wikipedia data');
           reject();
         }).done(function(data) {
-          //console.log(data);
           data.query.pages.forEach(function(index) {
             $('#wikipedia').html('<h1>' + index.title + '</h1>');
             $('#wikipedia').append('<section>' + index.extract + '</section>');
@@ -128,8 +127,6 @@ define(['knockout', 'viewModel', 'TweenLite', 'Ease', 'getMap'], function(ko, vi
           reject();
         }).done(function(data) {
           console.log('wikipedia data received');
-
-          console.log(data);
 
           // if there is data in the markers array, then reset it
           if (viewModel.wikipediaMarkers().length > 0) {
