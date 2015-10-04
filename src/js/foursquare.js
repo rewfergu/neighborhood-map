@@ -8,47 +8,17 @@ define(['knockout', 'viewModel', 'lodash', 'TweenLite', 'keys', 'Ease', 'getMap'
 
   window.markerList.foursquare = [];
 
-  // var infowindow = new google.maps.InfoWindow({
-  //   content: 'temp',
-  // });
-
-  // Sets the map on all markers in the array.
-  function setMapOnAll(map) {
-    for (var i = 0; i < viewModel.foursquareMarkers().length; i++) {
-      viewModel.foursquareMarkers[i].setMap(map);
-    }
-  }
-
-  // Removes the markers from the map, but keeps them in the array.
-  function clearMarkers() {
-    setMapOnAll(null);
-  }
-
-  // Shows any markers currently in the array.
-  function showMarkers() {
-    setMapOnAll(map);
-  }
-
   var resetMarkers = function() {
     window.markerList.foursquare.forEach(function(index) {
       index.setIcon(markerImage);
     });
   };
 
-  // custom svg symbol definition
-  var icon = {
-    path: 'M18.5,6.2c0,7.3-9.2,16.8-9.2,16.8S0,13.9,0,6.2C0,1.2,4.2-3,9.2-3S18.5,1.2,18.5,6.2z',
-    fillColor: 'yellow',
-    fillOpacity: 0.3,
-    scale: 1,
-    strokeColor: 'gold',
-    strokeWeight: 4,
-  };
-
-  // svg file symbol definition
+  // marker image properties
+  // since I'm animating the marker properties, this makes it easier to reset
   var FoursquareMarker = function() {
     return {
-      url: 'foursquare.png',
+      url: 'img/foursquare.png',
       currentSize: 25,
       anchorx: 0,
       anchory: 25,
@@ -66,18 +36,17 @@ define(['knockout', 'viewModel', 'lodash', 'TweenLite', 'keys', 'Ease', 'getMap'
   };
 
   function createMarker(venue, point, category, checkins) {
-    //var infoWindowHtml = generateInfoWindowHtml(biz)
-    //console.log(infoWindowHtml);
-    //var marker = new google.maps.marker(point, icon);
-
+    // these properties go into the knockout observable array
     var entry = {
       title: venue,
       category: category,
       checkins: checkins,
-      //position: point,
+      position: point,
     };
 
-    var properties = {
+    // these properties go into the marker array
+    // when I added the markers into a knockout array, everything went crazy
+    var marker = new google.maps.Marker({
       position: point,
       map: map,
       title: venue,
@@ -86,9 +55,7 @@ define(['knockout', 'viewModel', 'lodash', 'TweenLite', 'keys', 'Ease', 'getMap'
       category: category,
       checkins: checkins,
       draggable: false,
-    };
-
-    var marker = new google.maps.Marker(properties);
+    });
 
     //marker.openInfoWindowHtml(infoWindowHtml, {maxWidth:400});
     //console.log('marker clicked');
@@ -102,9 +69,7 @@ define(['knockout', 'viewModel', 'lodash', 'TweenLite', 'keys', 'Ease', 'getMap'
       contentString += '<div><i class="fa fa-cutlery"></i>  ' + _this.checkins + '</div>';
       window.infowindow.setContent(contentString);
 
-      // markerImage.url = 'foodMarkerActive.svg';
-      // _this.setIcon(markerImage);
-
+      // greensock tweenLite properties
       var tween = TweenLite.to(markerImage, 0.75, {
         currentSize: 35,
         anchorx: 0,
@@ -118,19 +83,19 @@ define(['knockout', 'viewModel', 'lodash', 'TweenLite', 'keys', 'Ease', 'getMap'
 
     });
 
-    //viewModel.foursquareMarkers.push(entry);
-    viewModel.beepboop.push(entry);
+    viewModel.foursquareMarkers.push(entry);
     window.markerList.foursquare.push(marker);
   }
 
-  //each time the tween updates this function will be called.
+  // each time the tween updates this function will be called.
   function updateMarker(marker) {
     markerImage.size = new google.maps.Size(markerImage.currentSize, markerImage.currentSize);
     markerImage.scaledSize = new google.maps.Size(markerImage.currentSize, markerImage.currentSize);
     markerImage.anchor = new google.maps.Point(markerImage.anchorx, markerImage.anchory);
-    //marker.setIcon(markerImage);
+    marker.setIcon(markerImage);
   }
 
+  // when the tween animation finishes this will happen
   function completeMarker(marker) {
     window.infowindow.open(map, marker);
     markerImage = new FoursquareMarker();
@@ -149,15 +114,16 @@ define(['knockout', 'viewModel', 'lodash', 'TweenLite', 'keys', 'Ease', 'getMap'
           reject();
         }).done(function(data) {
           console.log('foursquare data received');
-          if (viewModel.foursquareMarkers()) {
-            viewModel.foursquareMarkers = ko.observableArray();
+          if (viewModel.foursquareMarkers().length > 0) {
+            viewModel.foursquareMarkers([]);
+            window.markerList.foursquare = [];
           }
 
           data.response.venues.forEach(function(index) {
-            //console.dir(index);
             var pos = {lat: index.location.lat, lng: index.location.lng};
             createMarker(index.name, pos, index.categories[0].name, index.stats.checkinsCount);
           });
+
           console.log('foursquare data processed');
           resolve();
         });
