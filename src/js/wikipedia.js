@@ -1,4 +1,4 @@
-define(['knockout', 'viewModel', 'lodash', 'TweenLite', 'Ease', 'getMap'], function(ko, viewModel, _, TweenLite) {
+define(['knockout', 'viewModel', 'TweenLite', 'Ease', 'getMap'], function(ko, viewModel, TweenLite) {
   window.markerList.wikipedia = [];
 
   // marker image properties
@@ -105,9 +105,9 @@ define(['knockout', 'viewModel', 'lodash', 'TweenLite', 'Ease', 'getMap'], funct
           reject();
         }).done(function(data) {
           //console.log(data);
-          _.forEach(data.query.pages, function(n, key) {
-            $('#wikipedia').html('<h1>' + n.title + '</h1>');
-            $('#wikipedia').append('<section>' + n.extract + '</section>');
+          data.query.pages.forEach(function(index) {
+            $('#wikipedia').html('<h1>' + index.title + '</h1>');
+            $('#wikipedia').append('<section>' + index.extract + '</section>');
           });
 
           resolve();
@@ -137,12 +137,13 @@ define(['knockout', 'viewModel', 'lodash', 'TweenLite', 'Ease', 'getMap'], funct
             window.markerList.wikipedia = [];
           }
 
-          _.forEach(data.query.pages, function(n, key) {
-            if (n.coordinates) {
-              var pos = {lat: n.coordinates[0].lat, lng: n.coordinates[0].lon};
-              createMarker(n.title, pos, n.thumbnail);
+          data.query.pages.forEach(function(index) {
+            if (index.coordinates) {
+              var pos = {lat: index.coordinates[0].lat, lng: index.coordinates[0].lon};
+              createMarker(index.title, pos, index.thumbnail);
             }
           });
+
           console.log('wikipedia data processed');
           resolve();
         });
