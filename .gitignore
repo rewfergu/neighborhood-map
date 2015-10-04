@@ -1,0 +1,8 @@
+# API keys
+src/js/keys.js
+
+# npm dependencies
+node_modules
+
+# build folder
+dist

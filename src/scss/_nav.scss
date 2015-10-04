@@ -1,0 +1,93 @@
+.navbar {
+  border-radius: 0;
+  margin-bottom: 0;
+  position: relative;
+  z-index: 10;
+  background: hsla(0, 0%, 100%, 0.75);
+}
+
+.navbar-default {
+  border-right: 0;
+  border-left: 0;
+}
+
+.navbar-brand {
+  padding: 10px;
+  height: 55px;
+  overflow: hidden;
+  font-size: 20px;
+}
+
+.navbar-brand .wrapper {
+  transition: transform .25s;
+  will-change: transform;
+  transform: translateY(-62%);
+}
+
+.navbar-brand.search .wrapper {
+  transform: translateY(0%);
+}
+
+.navbar-brand form {
+  max-width: 230px;
+  margin-bottom: 2rem;
+  .btn {
+    padding: 7px 12px 6px;
+  }
+}
+
+.form-inline .form-group {
+  display: inline-block;
+}
+
+.navbar-brand .place-name span {
+  position: relative;
+  top: 2px;
+}
+
+.form-control, .input-group {
+  width: auto;
+}
+
+.btn-wikipedia {
+  @include button-variant(#fff, $wikipedia-bg, darken($wikipedia-bg, 6.5%));
+}
+
+.btn-foursquare {
+  @include button-variant(#fff, $foursquare-bg, darken($foursquare-bg, 6.5%));
+}
+
+.btn-google {
+  @include button-variant(#fff, $google-bg, darken($google-bg, 6.5%));
+}
+
+.btn-flickr {
+  @include button-variant(#fff, $flickr-bg, darken($flickr-bg, 6.5%));
+}
+
+.btn-wikipedia.map-disabled,
+.btn-foursquare.map-disabled,
+.btn-google.map-disabled,
+.btn-flickr.map-disabled {
+  background: #666;
+  border-color: #4c4c4c;
+}
+
+.services-wrap {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  padding-right: 15px;
+
+  .btn-group {
+    margin-left: 10px;
+    color: #fff;
+  }
+
+  .btn {
+    transition: background-color .25s;
+  }
+  @media (min-width: $grid-float-breakpoint) {
+    padding: 10px 0 0 0;
+  }
+}

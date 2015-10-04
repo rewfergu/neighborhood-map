@@ -1,0 +1,115 @@
+@import '../bower_components/bootstrap-sass/assets/stylesheets/bootstrap';
+
+$wikipedia-bg: #3fb71e;
+$foursquare-bg: #f400a7;
+$google-bg: #f22135;
+$flickr-bg: #5896fe;
+
+html, body {
+  height: 100%; margin: 0; padding: 0;
+  overflow: hidden;
+}
+body {
+  font-family: 'Coustard', serif;
+  background: #000;
+}
+
+@import 'nav';
+
+main {
+  height: 100%;
+}
+
+.weather {
+  position: relative;
+  z-index: 2;
+  top: 10px;
+  right: 10px;
+  background: #fff;
+  text-align: right;
+  font-size: 26px;
+  line-height: 26px;
+  padding: 20px 65px 20px 20px;
+  border-radius: 15px;
+  width: 135px;
+  float: right;
+}
+
+#weatherIcon {
+  position: absolute;
+  top: 8px;
+}
+
+#temp {
+  padding-right: 10px;
+}
+
+#map {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  z-index: 1;
+}
+
+.detailPanel {
+  position: absolute;
+  z-index: 9;
+  top: 0;
+  left: 0;
+  right: 0;
+  max-height: 100vh;
+  overflow: scroll;
+  padding: 5rem;
+  background: #fff;
+  transform: translateY(-100vh);
+  will-change: transform;
+  transition: all 1s;
+}
+
+.detailPanel.active {
+  transform: translateY(0vh);
+}
+
+.detailPanel ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.flickr-container, .wikipedia-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: stretch;
+}
+
+.flickr-container li,
+.wikipedia-container li {
+  padding: 2px;
+}
+
+.flickr-container img,
+.wikipedia-container img {
+  height: 180px;
+  width: auto;
+}
+
+#foursquare ul {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#foursquare li {
+  width: 25%;
+  border-bottom: 1px dashed #ccc;
+  padding: 2rem 0;
+}
+
+#foursquare .title {
+}
+
+#foursquare .category {
+  font-size: 1rem;
+}
