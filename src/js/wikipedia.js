@@ -1,9 +1,10 @@
-define(['knockout', 'viewModel', 'lodash', 'TweenLite', 'Ease', 'getMap'], function(ko, viewModel, _) {
+define(['knockout', 'viewModel', 'lodash', 'TweenLite', 'Ease', 'getMap'], function(ko, viewModel, _, TweenLite) {
   window.markerList.wikipedia = [];
 
+  // marker image properties
   var WikipediaMarker = function() {
     return {
-      url: 'wikipedia.png',
+      url: 'img/wikipedia.png',
       currentSize: 25,
       anchorx: 0,
       anchory: 25,
@@ -19,20 +20,24 @@ define(['knockout', 'viewModel', 'lodash', 'TweenLite', 'Ease', 'getMap'], funct
   function createMarker(name, point, image) {
     var contentString = '<div>' + name + '</div>';
     var url;
+
+    // check for an image
     if (image) {
       url = image.source;
       contentString += '<img src="' + url + '" alt="wikipedia image">';
     }
 
+    // these properties go into the knockout observable array
     var entry = {
       title: name,
       position: point,
       url: url,
-    }
+    };
 
+    // these properties go into the map marker array
     var marker = new google.maps.Marker({
       position: point,
-      map: null,
+      map: map,
       title: name,
       animation: google.maps.Animation.DROP,
       icon: markerImage,
@@ -47,6 +52,7 @@ define(['knockout', 'viewModel', 'lodash', 'TweenLite', 'Ease', 'getMap'], funct
       var _this = this;
       window.infowindow.setContent(contentString);
 
+      // greensock tweenLite properties
       var tween = TweenLite.to(markerImage, 0.75, {
         currentSize: 35,
         anchorx: 0,
@@ -64,7 +70,7 @@ define(['knockout', 'viewModel', 'lodash', 'TweenLite', 'Ease', 'getMap'], funct
     window.markerList.wikipedia.push(marker);
   }
 
-  // // each time the tween updates this function will be called.
+  // each time the tween updates this function will be called.
   function updateMarker(marker) {
     markerImage.size = new google.maps.Size(markerImage.currentSize, markerImage.currentSize);
     markerImage.scaledSize = new google.maps.Size(markerImage.currentSize, markerImage.currentSize);
@@ -72,14 +78,16 @@ define(['knockout', 'viewModel', 'lodash', 'TweenLite', 'Ease', 'getMap'], funct
     marker.setIcon(markerImage);
   }
 
+  // when the tween animation finishes this will happen
   function completeMarker(marker) {
     window.infowindow.open(map, marker);
     markerImage = new WikipediaMarker();
   }
 
+  // reset markers to original size
   function resetMarkers() {
     window.markerList.wikipedia.forEach(function(index) {
-      //index.setIcon(markerImage);
+      index.setIcon(markerImage);
     });
   }
 
@@ -120,6 +128,15 @@ define(['knockout', 'viewModel', 'lodash', 'TweenLite', 'Ease', 'getMap'], funct
           reject();
         }).done(function(data) {
           console.log('wikipedia data received');
+
+          console.log(data);
+
+          // if there is data in the markers array, then reset it
+          if (viewModel.wikipediaMarkers().length > 0) {
+            viewModel.wikipediaMarkers([]);
+            window.markerList.wikipedia = [];
+          }
+
           _.forEach(data.query.pages, function(n, key) {
             if (n.coordinates) {
               var pos = {lat: n.coordinates[0].lat, lng: n.coordinates[0].lon};

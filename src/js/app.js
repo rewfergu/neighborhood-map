@@ -59,20 +59,20 @@ define([
     // search weather
     weather.getWeather(lat, long);
 
-    // get wikipedia
-    // wikipedia.searchNearby(lat, long).then(function() {
-    //   viewModel.wikipediaLoaded(true);
-    //   viewModel.wikipediaActive(true);
-    //   imagesloaded('#wikipedia-container', function() {
-    //     new Packery('#wikipedia-container', {
-    //       // options
-    //       itemSelector: '.grid-item',
-    //       gutter: 10,
-    //     });
-    //
-    //     $('#wikipedia-container [data-toggle="tooltip"]').tooltip();
-    //   });
-    // });
+    // search wikipedia
+    wikipedia.searchNearby(lat, long).then(function() {
+      viewModel.wikipediaLoaded(true);
+      viewModel.wikipediaActive(true);
+      imagesloaded('#wikipedia-container', function() {
+        new Packery('#wikipedia-container', {
+          // options
+          itemSelector: '.grid-item',
+          gutter: 10,
+        });
+
+        $('#wikipedia-container [data-toggle="tooltip"]').tooltip();
+      });
+    });
 
     // search foursquare
     foursquare.search(lat, long).then(function() {

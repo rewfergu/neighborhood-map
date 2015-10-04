@@ -1,4 +1,4 @@
-define(['knockout', 'viewModel', 'lodash', 'TweenLite', 'keys', 'Ease', 'getMap'], function(ko, viewModel, _, TweenLite, keys) {
+define(['knockout', 'viewModel', 'TweenLite', 'keys', 'Ease', 'getMap'], function(ko, viewModel, TweenLite, keys) {
   //var ll = 'll=' + viewModel.position.lat() + ',' + viewModel.position.long();
   var clientId = 'client_id=' + keys.foursquareId;
   var clientSecret = '&client_secret=' + keys.foursquareSecret;
@@ -7,12 +7,6 @@ define(['knockout', 'viewModel', 'lodash', 'TweenLite', 'keys', 'Ease', 'getMap'
   var url = 'https://api.foursquare.com/v2/venues/search?' + clientId + clientSecret + m + v;
 
   window.markerList.foursquare = [];
-
-  var resetMarkers = function() {
-    window.markerList.foursquare.forEach(function(index) {
-      index.setIcon(markerImage);
-    });
-  };
 
   // marker image properties
   // since I'm animating the marker properties, this makes it easier to reset
@@ -30,10 +24,6 @@ define(['knockout', 'viewModel', 'lodash', 'TweenLite', 'keys', 'Ease', 'getMap'
   };
 
   var markerImage = new FoursquareMarker();
-
-  var animateMarker = {
-    currentSize: 0,
-  };
 
   function createMarker(venue, point, category, checkins) {
     // these properties go into the knockout observable array
@@ -56,9 +46,6 @@ define(['knockout', 'viewModel', 'lodash', 'TweenLite', 'keys', 'Ease', 'getMap'
       checkins: checkins,
       draggable: false,
     });
-
-    //marker.openInfoWindowHtml(infoWindowHtml, {maxWidth:400});
-    //console.log('marker clicked');
 
     marker.addListener('click', function() {
       window.infowindow.close();
@@ -101,6 +88,13 @@ define(['knockout', 'viewModel', 'lodash', 'TweenLite', 'keys', 'Ease', 'getMap'
     markerImage = new FoursquareMarker();
   }
 
+  // reset markers to original size
+  function resetMarkers() {
+    window.markerList.foursquare.forEach(function(index) {
+      index.setIcon(markerImage);
+    });
+  };
+
   return {
     search: function(lat, long) {
       return new Promise(function(resolve, reject) {
@@ -114,6 +108,8 @@ define(['knockout', 'viewModel', 'lodash', 'TweenLite', 'keys', 'Ease', 'getMap'
           reject();
         }).done(function(data) {
           console.log('foursquare data received');
+
+          // if there is data in the markers array, then reset it
           if (viewModel.foursquareMarkers().length > 0) {
             viewModel.foursquareMarkers([]);
             window.markerList.foursquare = [];
