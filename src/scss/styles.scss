@@ -79,7 +79,14 @@ main {
   padding: 0;
 }
 
-.flickr-container, .wikipedia-container {
+.detailPanel img {
+  height: 150px;
+  width: auto;
+  border: 1px solid #d6d6d6;
+}
+
+.flickr-container,
+.wikipedia-container {
   display: flex;
   flex-wrap: wrap;
   align-content: stretch;
@@ -90,26 +97,26 @@ main {
   padding: 2px;
 }
 
-.flickr-container img,
-.wikipedia-container img {
-  height: 180px;
-  width: auto;
+.flickr-image {
+  // height: 180px;
+  // width: auto;
 }
 
-#foursquare ul {
+.wikipedia-image {
+
+}
+
+.foursquare-container {
   display: flex;
   flex-wrap: wrap;
-}
 
-#foursquare li {
-  width: 25%;
-  border-bottom: 1px dashed #ccc;
-  padding: 2rem 0;
-}
+  li {
+    width: 25%;
+    border-bottom: 1px dashed #ccc;
+    padding: 2rem 0;
+  }
 
-#foursquare .title {
-}
-
-#foursquare .category {
-  font-size: 1rem;
+  .category {
+    font-size: 1rem;
+  }
 }

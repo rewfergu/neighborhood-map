@@ -81,10 +81,21 @@ define([
     });
 
     // search google places
-    // googlePlaces.search(lat, long).then(function() {
-    //   viewModel.googleLoaded(true);
-    //   viewModel.googlePlacesActive(true);
-    // });
+    googlePlaces.search(lat, long).then(function() {
+      viewModel.googleLoaded(true);
+      viewModel.googlePlacesActive(true);
+
+      imagesloaded('#google-container', function() {
+        new Packery('#google-container', {
+          // options
+          itemSelector: '.grid-item',
+          gutter: 10,
+        });
+
+        $('#google-container [data-toggle="tooltip"]').tooltip();
+      });
+
+    });
 
     // search flickr
     flickr.search(lat, long).then(function() {

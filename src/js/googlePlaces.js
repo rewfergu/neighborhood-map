@@ -1,9 +1,10 @@
-define(['knockout', 'viewModel', 'lodash', 'TweenLite', 'Ease', 'getMap'], function(ko, viewModel, _, TweenLite) {
+define(['knockout', 'viewModel', 'TweenLite', 'Ease', 'getMap'], function(ko, viewModel, TweenLite) {
   window.markerList.googlePlaces = [];
 
+  // marker image properties
   var GoogleMarker = function() {
     return {
-      url: 'google.png',
+      url: 'img/google.png',
       currentSize: 25,
       anchorx: 0,
       anchory: 25,
@@ -20,8 +21,9 @@ define(['knockout', 'viewModel', 'lodash', 'TweenLite', 'Ease', 'getMap'], funct
     var photo;
 
     if (place.photos) {
-      photo = place.photos[0].getUrl({maxWidth: 150, maxHeight: 150});
+      photo = place.photos[0].getUrl({maxWidth: 250, maxHeight: 250});
 
+      // these properties go into the knockout observable array
       var entry = {
         title: place.name,
         placeIcon: place.icon,
@@ -29,6 +31,7 @@ define(['knockout', 'viewModel', 'lodash', 'TweenLite', 'Ease', 'getMap'], funct
         photo: photo,
       };
 
+      // these properties go into the map marker array
       var marker = new google.maps.Marker({
         map: map,
         position: {lat: place.geometry.location.H, lng: place.geometry.location.L},
@@ -47,8 +50,8 @@ define(['knockout', 'viewModel', 'lodash', 'TweenLite', 'Ease', 'getMap'], funct
         var contentString = '<div><img src="' + _this.placeIcon +  '" width="20"><p>' + _this.title + '</p>';
         contentString += '<p><img src="' + _this.photo + '"></p>';
         window.infowindow.setContent(contentString);
-        //infowindow.open(map, this);
 
+        // greensock tweenLite properties
         var tween = TweenLite.to(markerImage, 0.75, {
           currentSize: 35,
           anchorx: 0,
@@ -74,11 +77,13 @@ define(['knockout', 'viewModel', 'lodash', 'TweenLite', 'Ease', 'getMap'], funct
     marker.setIcon(markerImage);
   }
 
+  // when the tween animation finishes this will happen
   function completeMarker(marker) {
     window.infowindow.open(map, marker);
     markerImage = new GoogleMarker();
   }
 
+  // reset markers to original size
   function resetMarkers() {
     window.markerList.googlePlaces.forEach(function(index) {
       index.setIcon(markerImage);

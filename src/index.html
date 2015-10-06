@@ -171,7 +171,7 @@
     <!-- foursquare list view -->
     <div id="foursquare" class="detailPanel">
       <h1>foursquare</h1>
-      <ul data-bind="foreach: foursquareMarkers">
+      <ul data-bind="foreach: foursquareMarkers" class="foursquare-container">
         <li>
           <a href="#" data-bind="selectMarker: {position: $index, markerList: 'foursquare'}" class="title">
             <span data-bind="text: title"></span>
@@ -190,7 +190,7 @@
       <h1>Wikipedia</h1>
       <ul data-bind="foreach: wikipediaMarkers" class="grid" id="wikipedia-container">
         <li class="grid-item" data-bind="if: url">
-          <a href="#" data-bind="selectMarker: {position: $index, markerList: 'wikipedia'}"><img data-bind="attr: {src: url, alt: title, title: title}" data-toggle="tooltip" data-placement="bottom" class="img-rounded"></a>
+          <a href="#" data-bind="selectMarker: {position: $index, markerList: 'wikipedia'}"><img data-bind="attr: {src: url, alt: title, title: title}" data-toggle="tooltip" data-placement="bottom" class="img-rounded wikipedia-image"></a>
         </li>
       </ul>
     </div>
@@ -198,13 +198,10 @@
     <!-- google list view -->
     <div id="google" class="detailPanel">
       <h1>Google Places</h1>
-      <ul data-bind="foreach: googleMarkers">
-        <li>
+      <ul data-bind="foreach: googleMarkers" id="google-container">
+        <li class="grid-item">
           <a href="#" data-bind="selectMarker: {position: $index, markerList: 'googlePlaces'}">
-            <div data-bind="text: title" class="title"></div>
-            <img data-bind="attr: {src: placeIcon}" alt="google place icom">
-            <div data-bind="text: type" class="category"></div>
-            <img data-bind="attr: {src: photo}" alt="google place image">
+            <img data-bind="attr: {src: photo, alt: title, title: title}" data-toggle="tooltip" data-placement="bottom" class="img-rounded">
           </a>
         </li>
       </ul>
@@ -216,7 +213,7 @@
       <ul data-bind="foreach: flickrMarkers" class="grid" id="flickr-container">
         <li class="grid-item">
           <a href="#" data-bind="selectMarker: {position: $index, markerList: 'flickr'}">
-            <img data-bind="attr: {src: url, alt: title, title: title}" class="img-rounded" data-toggle="tooltip" data-placement="bottom">
+            <img data-bind="attr: {src: url, alt: title, title: title}" class="img-rounded flickr-image" data-toggle="tooltip" data-placement="bottom">
           </a>
         </li>
       </ul>
