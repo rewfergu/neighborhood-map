@@ -34,7 +34,7 @@ define(['knockout', 'viewModel', 'TweenLite', 'Ease', 'getMap'], function(ko, vi
       // these properties go into the map marker array
       var marker = new google.maps.Marker({
         map: map,
-        position: {lat: place.geometry.location.H, lng: place.geometry.location.L},
+        position: place.geometry.location,
         animation: google.maps.Animation.DROP,
         icon: markerImage,
         title: place.name,
@@ -115,6 +115,6 @@ define(['knockout', 'viewModel', 'TweenLite', 'Ease', 'getMap'], function(ko, vi
           }
         }
       }); // promise
-    } // search fn
+    }, // search fn
   }; // return obj
 }); // module definition

@@ -1,4 +1,4 @@
-define([], function() {
+define(['skycons'], function(skycons) {
   return {
     getWeather: function(lat, long){
       return new Promise(function(resolve, reject){

@@ -1,6 +1,6 @@
 // require.js looks for the following global when initializing
 var require = {
-  baseUrl: '.',
+  baseUrl: '../',
   shim: {
     bootstrap: {
       deps: ['jquery'],
@@ -13,6 +13,7 @@ var require = {
     async: 'bower_components/requirejs-plugins/src/async',
     getMap: 'js/getMap',
     geocode: 'js/geocode',
+    skycons: 'bower_components/skycons-html5/skycons',
     weather: 'js/weather',
     viewModel: 'js/viewModel',
     lodash: 'bower_components/lodash/lodash',

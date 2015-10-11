@@ -4,9 +4,12 @@
   <meta charset="UTF-8">
   <title>Neighborhood Map Project</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="css/styles.css">
   <link href="https://fonts.googleapis.com/css?family=Coustard:400,900" rel="stylesheet" type="text/css">
+
+  <!-- build:css css/styles.css -->
+  <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css">
+  <!-- endbuild -->
 </head>
 <body>
   <nav class="navbar navbar-default">
@@ -221,8 +224,12 @@
   </main>
   <footer></footer>
 
+  <!-- build:remove -->
   <script src="js/require.config.js"></script>
+  <!-- endbuild -->
+
+  <!-- build:js js/require.js data-main="js/app" -->
   <script data-main="js/app" src="bower_components/requirejs/require.js"></script>
-  <script src="bower_components/skycons-html5/skycons.js"></script>
+  <!-- endbuild -->
 </body>
 </html>
