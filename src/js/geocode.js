@@ -1,10 +1,8 @@
 define(['knockout', 'viewModel', 'getMap', 'weather', 'wikipedia', 'keys'], function(ko, viewModel, getMap, weather, wikipedia, keys) {
-  //var url = 'https://maps.googleapis.com/maps/api/geocode/json?key=' + viewModel.key;
 
   return {
     // takes a lat / long pair and returns a location string for searching Wikipedia
     searchCoords: function(lat, long) {
-      //var url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' + lat + ',' + long + '&result_type=street_address&key=AIzaSyA7AzAUzaTkpYC4HGJdbJQ37ClRELV1M_w';
       var url = 'https://maps.googleapis.com/maps/api/geocode/json?key=' + keys.google;
       var city;
       var state;
@@ -21,8 +19,6 @@ define(['knockout', 'viewModel', 'getMap', 'weather', 'wikipedia', 'keys'], func
             }
             if (city && state) {
               viewModel.placeName(city + ', ' + state);
-              //console.log('place found');
-              //console.log(city + ', ' + state);
             }
           });
 

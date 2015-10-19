@@ -10,6 +10,7 @@ var requirejsOptimize = require('gulp-requirejs-optimize');
 var minifyHTML = require('gulp-htmlmin');
 var useref = require('gulp-useref');
 var gulpif = require('gulp-if');
+var ghPages = require('gulp-gh-pages');
 
 // process styles
 gulp.task('sass', function() {
@@ -106,6 +107,11 @@ gulp.task('build', [
   'copy-fonts',
   'minify-html-assets',
 ]);
+
+gulp.task('deploy', function() {
+  return gulp.src('dist/**/*')
+    .pipe(ghPages());
+});
 
 // watch the scss folder
 gulp.task('watch', function() {

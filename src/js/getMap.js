@@ -3,8 +3,6 @@ define(['viewModel', 'async!https://maps.googleapis.com/maps/api/js?libraries=pl
   var long;
   var pos;
 
-  //&key=AIzaSyA7AzAUzaTkpYC4HGJdbJQ37ClRELV1M_w
-
   var map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 38.9199895, lng: -99.0434879},
     zoom: 14,
