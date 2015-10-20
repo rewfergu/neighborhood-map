@@ -170,7 +170,13 @@
 
     <!-- foursquare list view -->
     <div id="foursquare" class="detailPanel">
-      <h1>foursquare</h1>
+      <h1>
+        <span class="fa-stack fa-sm service-icon service-icon-foursquare">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-foursquare fa-stack-1x fa-inverse"></i>
+        </span>
+        foursquare
+      </h1>
       <ul data-bind="foreach: foursquareMarkers" class="foursquare-container">
         <li>
           <a href="#" data-bind="selectMarker: {position: $index, markerList: 'foursquare'}" class="title">
@@ -187,7 +193,13 @@
 
     <!-- wikipedia list view -->
     <div id="wikipedia" class="detailPanel">
-      <h1>Wikipedia</h1>
+      <h1>
+        <span class="fa-stack fa-sm service-icon service-icon-wikipedia">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-wikipedia-w fa-stack-1x fa-inverse"></i>
+        </span>
+        Wikipedia
+      </h1>
       <ul data-bind="foreach: wikipediaMarkers" class="grid" id="wikipedia-container">
         <li class="grid-item" data-bind="if: url">
           <a href="#" data-bind="selectMarker: {position: $index, markerList: 'wikipedia'}"><img data-bind="attr: {src: url, alt: title, title: title}" data-toggle="tooltip" data-placement="bottom" class="img-rounded wikipedia-image"></a>
@@ -197,7 +209,13 @@
 
     <!-- google list view -->
     <div id="google" class="detailPanel">
-      <h1>Google Places</h1>
+      <h1>
+        <span class="fa-stack fa-sm service-icon service-icon-google">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-google fa-stack-1x fa-inverse"></i>
+        </span>
+        Google Places
+      </h1>
       <ul data-bind="foreach: googleMarkers" id="google-container">
         <li class="grid-item">
           <a href="#" data-bind="selectMarker: {position: $index, markerList: 'googlePlaces'}">
@@ -209,7 +227,13 @@
 
     <!-- flickr list view -->
     <div id="flickr" class="detailPanel">
-      <h1>flickr</h1>
+      <h1>
+        <span class="fa-stack fa-sm service-icon service-icon-flickr">
+          <i class="fa fa-circle fa-stack-2x"></i>
+          <i class="fa fa-flickr fa-stack-1x fa-inverse"></i>
+        </span>
+        flickr
+      </h1>
       <ul data-bind="foreach: flickrMarkers" class="grid" id="flickr-container">
         <li class="grid-item">
           <a href="#" data-bind="selectMarker: {position: $index, markerList: 'flickr'}">
