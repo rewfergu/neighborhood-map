@@ -101,6 +101,12 @@ define(['knockout', 'viewModel', 'jquery', 'TweenLite', 'keys', 'Ease', 'getMap'
         }).done(function(data) {
           console.log('flickr data received');
 
+          // if there is data in the markers array, then reset it
+          if (viewModel.flickrMarkers().length > 0) {
+            viewModel.flickrMarkers([]);
+            window.markerList.flickr = [];
+          }
+
           //for (var i = 0; i < data.photos.photo.length; i++) {
           data.photos.photo.forEach(function(index){
             var photo = index;

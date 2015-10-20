@@ -104,6 +104,14 @@ define(['knockout', 'viewModel', 'TweenLite', 'Ease', 'getMap'], function(ko, vi
         function callback(results, status) {
           if (status === google.maps.places.PlacesServiceStatus.OK) {
             console.log('google places data received');
+
+            // if there is data in the markers array, then reset it
+            if (viewModel.googleMarkers().length > 0) {
+              viewModel.googleMarkers([]);
+              window.markerList.googlePlaces = [];
+            }
+
+            // loop through results and process
             for (var i = 0; i < results.length; i++) {
               createMarker(results[i]);
             }

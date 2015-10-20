@@ -16,22 +16,6 @@ define(['viewModel', 'async!https://maps.googleapis.com/maps/api/js?libraries=pl
   window.infowindow = new google.maps.InfoWindow({map: window.map});
   window.infowindow.close();
 
-  // function success(position) {
-  //   pos = {
-  //     lat: position.coords.latitude,
-  //     lng: position.coords.longitude,
-  //   };
-  //
-  //   viewModel.position.lat(position.coords.latitude);
-  //   viewModel.position.long(position.coords.longitude);
-  //   map.setCenter(pos);
-  //
-  //   console.log('we should be processing now');
-  //
-  //   //searchCoords(position.coords.latitude, position.coords.longitude);
-  //   //geocode.searchCoords(position.coords.latitude, position.coords.longitude);
-  // }
-
   function error(err) {
     console.log('browser does support geolocation, but there was some error getting the coords');
     handleLocationError(true, map.getCenter());
@@ -39,9 +23,9 @@ define(['viewModel', 'async!https://maps.googleapis.com/maps/api/js?libraries=pl
 
   function handleLocationError(browserHasGeolocation, pos) {
     window.infowindow.setPosition(pos);
-    window.infowindow.setContent(browserHasGeolocation ? 'Error: The Geolocation service failed.' : 'Error: Your browser doesn\'t support geolocation.');
+    window.infowindow.setContent('We couldn\'t find your location. Enter a location above.');
     map.setZoom(5);
-    window.infowindow.open();
+    window.infowindow.open(map);
   }
 
   return new Promise(function(resolve, reject) {
@@ -59,7 +43,7 @@ define(['viewModel', 'async!https://maps.googleapis.com/maps/api/js?libraries=pl
 
         resolve();
 
-      }, error, {timeout: 3000});
+      }, error, {timeout: 5000});
     } else {
       // Browser doesn't support Geolocation
       console.log('browser does not support geolocation');

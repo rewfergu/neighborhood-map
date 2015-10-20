@@ -120,3 +120,29 @@ main {
     font-size: 1rem;
   }
 }
+
+.service-icon {
+  position: relative;
+  top: -5px;
+}
+
+.service-icon-wikipedia {
+  .fa-stack-2x {
+    color: $wikipedia-bg;
+  }
+  .fa-stack-1x {
+    font-size: 3rem;
+  }
+}
+
+.service-icon-foursquare .fa-stack-2x {
+  color: $foursquare-bg;
+}
+
+.service-icon-google .fa-stack-2x {
+  color: $google-bg;
+}
+
+.service-icon-flickr .fa-stack-2x {
+  color: $flickr-bg;
+}

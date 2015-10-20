@@ -34,6 +34,7 @@ define([
       $(element).submit(function() {
         geocode.searchPlace(viewModel.placeName()).then(function() {
           console.log('getting services...');
+          window.infowindow.close();
           getServices(viewModel.position.lat(), viewModel.position.long(), viewModel.placeName());
         });
 
@@ -91,10 +92,8 @@ define([
           itemSelector: '.grid-item',
           gutter: 10,
         });
-
         $('#google-container [data-toggle="tooltip"]').tooltip();
       });
-
     });
 
     // search flickr

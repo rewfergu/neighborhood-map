@@ -1,6 +1,6 @@
 # API keys
 src/js/keys.js
 
-node_modules
-dist
-.publish
+node_modules/
+dist/
+.publish/
