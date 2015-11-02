@@ -63,13 +63,21 @@
               <button
                 disabled
                 type="button"
+                class="btn btn-wikipedia"
+                data-bind="enable: wikipediaLoaded, markerToggle: {toggle: wikipediaActive, markerList: 'wikipedia'}, css: {'map-disabled': !wikipediaActive()}">
+                <i class="fa fa-map-marker"></i>
+                <span class="sr-only">Toggle Wikipedia Map Markers</span>
+              </button>
+              <button
+                disabled
+                type="button"
                 class="btn btn-wikipedia dropdown-toggle"
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
                 data-bind="enable: wikipediaLoaded, serviceResultsView: {target: '#wikipedia', toggle: wikipediaActive}, css: {'map-disabled': !wikipediaActive()}">
 
-                <span class="caret"></span>
+                <span class="fa fa-list"></span>
                 <span class="sr-only">View Wikipedia Info</span>
               </button>
             </div>
@@ -90,13 +98,21 @@
               <button
                 disabled
                 type="button"
+                class="btn btn-foursquare"
+                data-bind="enable: foursquareLoaded, markerToggle: {toggle: foursquareActive, markerList: 'foursquare'}, css: {'map-disabled': !foursquareActive()}">
+                <i class="fa fa-map-marker"></i>
+                <span class="sr-only">Toggle Foursquare Map Markers</span>
+              </button>
+              <button
+                disabled
+                type="button"
                 class="btn btn-foursquare dropdown-toggle"
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
                 data-bind="enable: foursquareLoaded, serviceResultsView: {target: '#foursquare', toggle: foursquareActive}, css: {'map-disabled': !foursquareActive()}">
 
-                <span class="caret"></span>
+                <span class="fa fa-list"></span>
                 <span class="sr-only">View Foursquare Info</span>
               </button>
             </div>
@@ -117,13 +133,21 @@
               <button
                 disabled
                 type="button"
+                class="btn btn-google"
+                data-bind="enable: googleLoaded, markerToggle: {toggle: googlePlacesActive, markerList: 'googlePlaces'}, css: {'map-disabled': !googlePlacesActive()}">
+                <i class="fa fa-map-marker"></i>
+                <span class="sr-only">Toggle Google Map Markers</span>
+              </button>
+              <button
+                disabled
+                type="button"
                 class="btn btn-google dropdown-toggle"
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
                 data-bind="enable: googleLoaded, serviceResultsView: {target: '#google', toggle: googlePlacesActive}, css: {'map-disabled': !googlePlacesActive()}">
 
-                <span class="caret"></span>
+                <span class="fa fa-list"></span>
                 <span class="sr-only">View Google Places Info</span>
               </button>
             </div>
@@ -144,13 +168,21 @@
               <button
                 disabled
                 type="button"
+                class="btn btn-flickr"
+                data-bind="enable: flickrLoaded, markerToggle: {toggle: flickrActive, markerList: 'flickr'}, css: {'map-disabled': !flickrActive()}">
+                <i class="fa fa-map-marker"></i>
+                <span class="sr-only">Toggle Flickr Map Markers</span>
+              </button>
+              <button
+                disabled
+                type="button"
                 class="btn btn-flickr dropdown-toggle"
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
                 data-bind="enable: flickrLoaded, serviceResultsView: {target: '#flickr', toggle: flickrActive}, css: {'map-disabled': !flickrActive()}">
 
-                <span class="caret"></span>
+                <span class="fa fa-list"></span>
                 <span class="sr-only">View Flickr Info</span>
               </button>
             </div>
