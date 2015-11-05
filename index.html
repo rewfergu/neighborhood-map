@@ -19,7 +19,7 @@
 
             <!-- Search Form -->
             <form id="searchPlace" class="form-inline" data-bind="searchPlace: placeName">
-              <button class="btn btn-default"><i class="fa fa-close"></i><span class="sr-only">Cancel</span></button>
+              <button type="button" class="btn btn-default" data-bind="closeSearch"><i class="fa fa-close"></i><span class="sr-only">Cancel</span></button>
 
               <div class="input-group">
                 <input id="placeField" data-bind="value: placeName" class="form-control" placeholder="City, State"/>
@@ -41,9 +41,11 @@
             </div>
 
             <!-- filter places -->
-            <form id="filterPlaces" class="form-inline" data-bind="closeFilter">
+            <form id="filterPlaces" class="form-inline">
               <div class="form-group">
-                <button class="btn btn-default"><i class="fa fa-close"></i><span class="sr-only">Cancel</span></button>
+                <button type="button" class="btn btn-default" data-bind="closeFilter">
+                  <i class="fa fa-close"></i><span class="sr-only">Cancel</span>
+                </button>
 
                 <div class="input-group">
                   <input type="search" class="form-control" data-bind="value: filter, valueUpdate: 'keyup'" autocomplete="off">
