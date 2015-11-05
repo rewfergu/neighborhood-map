@@ -163,6 +163,15 @@ define([
     },
   };
 
+  ko.bindingHandlers.closeSearch = {
+    init: function(element, valueAccessor) {
+      $(element).click(function() {
+        $('#placeName').removeClass('search');
+        return false;
+      });
+    },
+  };
+
   ko.bindingHandlers.openFilter = {
     init: function(element, valueAccessor) {
       $(element).click(function() {
@@ -173,7 +182,7 @@ define([
 
   ko.bindingHandlers.closeFilter = {
     init: function(element, valueAccessor) {
-      $(element).submit(function() {
+      $(element).click(function() {
         $('#placeName').removeClass('filter');
         return false;
       });
