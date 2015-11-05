@@ -17,7 +17,7 @@ define(['knockout', 'viewModel', 'TweenLite', 'Ease', 'getMap'], function(ko, vi
 
   var markerImage = new WikipediaMarker();
 
-  function createMarker(name, point, image) {
+  function createMarker(id, name, point, image) {
     var contentString = '<div>' + name + '</div>';
     var url;
 
@@ -29,6 +29,7 @@ define(['knockout', 'viewModel', 'TweenLite', 'Ease', 'getMap'], function(ko, vi
 
     // these properties go into the knockout observable array
     var entry = {
+      id: id,
       title: name,
       position: point,
       url: url,
@@ -36,6 +37,7 @@ define(['knockout', 'viewModel', 'TweenLite', 'Ease', 'getMap'], function(ko, vi
 
     // these properties go into the map marker array
     var marker = new google.maps.Marker({
+      id: id,
       position: point,
       map: map,
       title: name,
@@ -50,6 +52,7 @@ define(['knockout', 'viewModel', 'TweenLite', 'Ease', 'getMap'], function(ko, vi
       window.infowindow.close();
       resetMarkers();
       var _this = this;
+      window.map.panTo(_this.position);
       window.infowindow.setContent(contentString);
 
       // greensock tweenLite properties
@@ -137,7 +140,7 @@ define(['knockout', 'viewModel', 'TweenLite', 'Ease', 'getMap'], function(ko, vi
           data.query.pages.forEach(function(index) {
             if (index.coordinates) {
               var pos = {lat: index.coordinates[0].lat, lng: index.coordinates[0].lon};
-              createMarker(index.title, pos, index.thumbnail);
+              createMarker(data.query.pages.indexOf(index), index.title, pos, index.thumbnail);
             }
           });
 

@@ -8,7 +8,6 @@ define(['knockout'], function(ko) {
     temperature: ko.observable(''),
 
     foursquareMarkers: ko.observableArray(),
-    beepboop: ko.observableArray(),
     flickrMarkers: ko.observableArray(),
     googleMarkers: ko.observableArray(),
     wikipediaMarkers: ko.observableArray(),
@@ -22,5 +21,7 @@ define(['knockout'], function(ko) {
     foursquareLoaded: ko.observable(false),
     googleLoaded: ko.observable(false),
     flickrLoaded: ko.observable(false),
+
+    filter: ko.observable(''),
   };
 });

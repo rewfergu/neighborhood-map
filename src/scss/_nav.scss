@@ -21,23 +21,34 @@
 .navbar-brand .wrapper {
   transition: transform .25s;
   will-change: transform;
-  transform: translateY(-62%);
+  transform: translateY(-54%);
 }
 
 .navbar-brand.search .wrapper {
-  transform: translateY(0%);
+  transform: translateY(-16%);
+}
+
+.navbar-brand.filter .wrapper {
+  transform: translateY(-91%);
 }
 
 .navbar-brand form {
-  max-width: 230px;
+  // max-width: 330px;
   margin-bottom: 2rem;
+  margin-top: 2rem;
   .btn {
     padding: 7px 12px 6px;
   }
 }
 
 .form-inline .form-group {
-  display: inline-block;
+  // display: inline-block;
+}
+
+.form-inline .input-group {
+  display: inline-table;
+  vertical-align: middle;
+  width: 250px;
 }
 
 .navbar-brand .place-name span {
@@ -46,7 +57,7 @@
 }
 
 .form-control, .input-group {
-  width: auto;
+  // width: auto;
 }
 
 .btn-wikipedia {
@@ -75,12 +86,12 @@
 
 .services-wrap {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   justify-content: flex-end;
-  padding-right: 15px;
+  padding-right: 7px;
 
   .btn-group {
-    margin-left: 10px;
+    margin: 0 0 1rem 1rem;
     color: #fff;
   }
 

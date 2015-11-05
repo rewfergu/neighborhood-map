@@ -17,7 +17,7 @@ define(['knockout', 'viewModel', 'TweenLite', 'Ease', 'getMap'], function(ko, vi
 
   var markerImage = new GoogleMarker();
 
-  function createMarker(place) {
+  function createMarker(id, place) {
     var photo;
 
     if (place.photos) {
@@ -25,6 +25,7 @@ define(['knockout', 'viewModel', 'TweenLite', 'Ease', 'getMap'], function(ko, vi
 
       // these properties go into the knockout observable array
       var entry = {
+        id: id,
         title: place.name,
         placeIcon: place.icon,
         type: place.types[0],
@@ -33,6 +34,7 @@ define(['knockout', 'viewModel', 'TweenLite', 'Ease', 'getMap'], function(ko, vi
 
       // these properties go into the map marker array
       var marker = new google.maps.Marker({
+        id: id,
         map: map,
         position: place.geometry.location,
         animation: google.maps.Animation.DROP,
@@ -49,6 +51,7 @@ define(['knockout', 'viewModel', 'TweenLite', 'Ease', 'getMap'], function(ko, vi
         var _this = this;
         var contentString = '<div><img src="' + _this.placeIcon +  '" width="20"><p>' + _this.title + '</p>';
         contentString += '<p><img src="' + _this.photo + '"></p>';
+        window.map.panTo(_this.position);
         window.infowindow.setContent(contentString);
 
         // greensock tweenLite properties
@@ -113,7 +116,7 @@ define(['knockout', 'viewModel', 'TweenLite', 'Ease', 'getMap'], function(ko, vi
 
             // loop through results and process
             for (var i = 0; i < results.length; i++) {
-              createMarker(results[i]);
+              createMarker(i, results[i]);
             }
 
             console.log('google data processed');

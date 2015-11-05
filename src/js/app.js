@@ -163,11 +163,129 @@ define([
     },
   };
 
+  ko.bindingHandlers.openFilter = {
+    init: function(element, valueAccessor) {
+      $(element).click(function() {
+        $('#placeName').addClass('filter');
+      });
+    },
+  };
+
+  ko.bindingHandlers.closeFilter = {
+    init: function(element, valueAccessor) {
+      $(element).submit(function() {
+        $('#placeName').removeClass('filter');
+        return false;
+      });
+    },
+  };
+
+  var filterPlaces = function(value) {
+    // filter wikipedia results
+    viewModel.wikipediaMarkers.removeAll();
+    for (var i in window.markerList.wikipedia) {
+      if (window.markerList.wikipedia[i].title.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+        viewModel.wikipediaMarkers.push({
+          id: window.markerList.wikipedia[i].id,
+          title: window.markerList.wikipedia[i].title,
+          position: window.markerList.wikipedia[i].position,
+          url: window.markerList.wikipedia[i].url,
+        });
+        window.markerList.wikipedia[i].setMap(window.map);
+      } else {
+        window.markerList.wikipedia[i].setMap(null);
+      }
+    }
+
+    imagesloaded('#wikipedia-container', function() {
+      new Packery('#wikipedia-container', {
+        // options
+        itemSelector: '.grid-item',
+        gutter: 10,
+      });
+      $('#wikipedia-container [data-toggle="tooltip"]').tooltip();
+    });
+
+    // filter foursquare results
+    viewModel.foursquareMarkers.removeAll();
+    for (var j in window.markerList.foursquare) {
+      if (window.markerList.foursquare[j].title.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+        viewModel.foursquareMarkers.push({
+          id: window.markerList.foursquare[j].id,
+          title: window.markerList.foursquare[j].title,
+          category: window.markerList.foursquare[j].category,
+          checkins: window.markerList.foursquare[j].checkins,
+          position: window.markerList.foursquare[j].point,
+        });
+        window.markerList.foursquare[j].setMap(window.map);
+      } else {
+        window.markerList.foursquare[j].setMap(null);
+      }
+    }
+
+    // filter google results
+    viewModel.googleMarkers.removeAll();
+    for (var k in window.markerList.googlePlaces) {
+      if (window.markerList.googlePlaces[k].title.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+        viewModel.googleMarkers.push({
+          id: window.markerList.googlePlaces[k].id,
+          title: window.markerList.googlePlaces[k].title,
+          placeIcon: window.markerList.googlePlaces[k].placeIcon,
+          type: window.markerList.googlePlaces[k].type,
+          photo: window.markerList.googlePlaces[k].photo,
+        });
+        window.markerList.googlePlaces[k].setMap(window.map);
+      } else {
+        window.markerList.googlePlaces[k].setMap(null);
+      }
+    }
+
+    imagesloaded('#google-container', function() {
+      new Packery('#google-container', {
+        // options
+        itemSelector: '.grid-item',
+        gutter: 10,
+      });
+      $('#google-container [data-toggle="tooltip"]').tooltip();
+    });
+
+    // filter flickr results
+    viewModel.flickrMarkers.removeAll();
+    for (var l in window.markerList.flickr) {
+      if (window.markerList.flickr[l].title.toLowerCase().indexOf(value.toLowerCase()) >= 0) {
+        viewModel.flickrMarkers.push({
+          id: window.markerList.flickr[l].id,
+          title: window.markerList.flickr[l].name,
+          position: window.markerList.flickr[l].place,
+          url: window.markerList.flickr[l].url,
+          info: window.markerList.flickr[l].contentString,
+        });
+        window.markerList.flickr[l].setMap(window.map);
+      } else {
+        window.markerList.flickr[l].setMap(null);
+      }
+    }
+
+    imagesloaded('#flickr-container', function() {
+      new Packery('#flickr-container', {
+        // options
+        itemSelector: '.grid-item',
+        gutter: 10,
+      });
+
+      $('#flickr-container [data-toggle="tooltip"]').tooltip();
+    });
+
+  };
+
+  // when the filter value changes, then run the filterPlaces funtion
+  viewModel.filter.subscribe(filterPlaces);
+
   ko.bindingHandlers.selectMarker = {
     init: function(element, valueAccessor) {
       var values = valueAccessor();
       $(element).click(function() {
-        new google.maps.event.trigger(window.markerList[values.markerList][values.position()], 'click');
+        new google.maps.event.trigger(window.markerList[values.markerList][values.position], 'click');
         $('.detailPanel').removeClass('active');
       });
     },

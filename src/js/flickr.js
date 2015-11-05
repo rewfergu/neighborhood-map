@@ -22,12 +22,13 @@ define(['knockout', 'viewModel', 'jquery', 'TweenLite', 'keys', 'Ease', 'getMap'
 
   var markerImage = new FlickrMarker();
 
-  function createMarker(name, place, url) {
+  function createMarker(id, name, place, url) {
     var contentString = '<div>' + name + '</div>';
     contentString += '<img src="' + url.thumb + '" alt="flickr image">';
 
     // these properties go into the knockout observable array
     var entry = {
+      id: id,
       title: name,
       position: place,
       url: url.small,
@@ -36,6 +37,7 @@ define(['knockout', 'viewModel', 'jquery', 'TweenLite', 'keys', 'Ease', 'getMap'
 
     // these properties go into the map marker array
     var marker = new google.maps.Marker({
+      id: id,
       map: map,
       title: name,
       position: place,
@@ -49,6 +51,7 @@ define(['knockout', 'viewModel', 'jquery', 'TweenLite', 'keys', 'Ease', 'getMap'
       window.infowindow.close();
       resetMarkers();
       _this = this;
+      window.map.panTo(_this.position);
       window.infowindow.setContent(_this.info);
 
       // greensock tweenLite properties
@@ -113,7 +116,8 @@ define(['knockout', 'viewModel', 'jquery', 'TweenLite', 'keys', 'Ease', 'getMap'
             var pos = new google.maps.LatLng(photo.latitude, photo.longitude);
             var name = photo.title;
             var url = {small: photo.url_s, thumb: photo.url_t};
-            createMarker(name, pos, url);
+            var id = data.photos.photo.indexOf(index);
+            createMarker(id, name, pos, url);
           });
           console.log('flickr data processed');
           resolve();

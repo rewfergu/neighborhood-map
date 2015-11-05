@@ -25,9 +25,10 @@ define(['knockout', 'viewModel', 'TweenLite', 'keys', 'Ease', 'getMap'], functio
 
   var markerImage = new FoursquareMarker();
 
-  function createMarker(venue, point, category, checkins) {
+  function createMarker(id, venue, point, category, checkins) {
     // these properties go into the knockout observable array
     var entry = {
+      id: id,
       title: venue,
       category: category,
       checkins: checkins,
@@ -37,6 +38,7 @@ define(['knockout', 'viewModel', 'TweenLite', 'keys', 'Ease', 'getMap'], functio
     // these properties go into the marker array
     // when I added the markers into a knockout array, everything went crazy
     var marker = new google.maps.Marker({
+      id: id,
       position: point,
       map: map,
       title: venue,
@@ -51,6 +53,7 @@ define(['knockout', 'viewModel', 'TweenLite', 'keys', 'Ease', 'getMap'], functio
       window.infowindow.close();
       resetMarkers();
       var _this = this;
+      window.map.panTo(_this.position);
       var contentString = '<div>' + _this.title + '</div>';
       contentString += '<div>Category: ' + _this.category + '</div>';
       contentString += '<div><i class="fa fa-cutlery"></i>  ' + _this.checkins + '</div>';
@@ -117,7 +120,8 @@ define(['knockout', 'viewModel', 'TweenLite', 'keys', 'Ease', 'getMap'], functio
 
           data.response.venues.forEach(function(index) {
             var pos = {lat: index.location.lat, lng: index.location.lng};
-            createMarker(index.name, pos, index.categories[0].name, index.stats.checkinsCount);
+            var id = data.response.venues.indexOf(index);
+            createMarker(id, index.name, pos, index.categories[0].name, index.stats.checkinsCount);
           });
 
           console.log('foursquare data processed');

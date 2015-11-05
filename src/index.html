@@ -21,21 +21,41 @@
           <div class="wrapper">
 
             <!-- Search Form -->
-            <form id="searchPlace" class="input-group form-inline" data-bind="searchPlace: placeName">
-              <input id="placeField" data-bind="value: placeName" class="form-control" placeholder="City, State"/>
-              <span class="input-group-btn">
-                <button id="placeBtn" class="btn btn-default" type="submit">Search</button>
-              </span>
+            <form id="searchPlace" class="form-inline" data-bind="searchPlace: placeName">
+              <button class="btn btn-default"><i class="fa fa-close"></i><span class="sr-only">Cancel</span></button>
+
+              <div class="input-group">
+                <input id="placeField" data-bind="value: placeName" class="form-control" placeholder="City, State"/>
+                <span class="input-group-btn">
+                  <button id="placeBtn" class="btn btn-default" type="submit">Search</button>
+                </span>
+              </div>
             </form>
 
             <!-- Display Location -->
-            <div data-bind="openSearch" class="place-name">
-              <button class="btn btn-default">
+            <div class="place-name">
+              <button class="btn btn-default" data-bind="openFilter">
+                <i class="fa fa-filter"></i>
+              </button>
+              <button class="btn btn-default" data-bind="openSearch">
                 <i class="fa fa-search"></i>
               </button>
-              <span data-bind="text: placeName || 'City, State'"></span>
+              <span data-bind="openSearch, text: placeName || 'City, State'"></span>
             </div>
 
+            <!-- filter places -->
+            <form id="filterPlaces" class="form-inline" data-bind="closeFilter">
+              <div class="form-group">
+                <button class="btn btn-default"><i class="fa fa-close"></i><span class="sr-only">Cancel</span></button>
+
+                <div class="input-group">
+                  <input type="search" class="form-control" data-bind="value: filter, valueUpdate: 'keyup'" autocomplete="off">
+                  <span class="input-group-addon">
+                    <i class="fa fa-filter"></i>
+                  </span>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
 
@@ -214,7 +234,7 @@
       </h1>
       <ul data-bind="foreach: foursquareMarkers" class="foursquare-container">
         <li>
-          <a href="#" data-bind="selectMarker: {position: $index, markerList: 'foursquare'}" class="title">
+          <a href="#" data-bind="selectMarker: {position: id, markerList: 'foursquare'}" class="title">
             <span data-bind="text: title"></span>
           </a>
           <div data-bind="text: category" class="category"></div>
@@ -237,7 +257,7 @@
       </h1>
       <ul data-bind="foreach: wikipediaMarkers" class="grid" id="wikipedia-container">
         <li class="grid-item" data-bind="if: url">
-          <a href="#" data-bind="selectMarker: {position: $index, markerList: 'wikipedia'}"><img data-bind="attr: {src: url, alt: title, title: title}" data-toggle="tooltip" data-placement="bottom" class="img-rounded wikipedia-image"></a>
+          <a href="#" data-bind="selectMarker: {position: id, markerList: 'wikipedia'}"><img data-bind="attr: {src: url, alt: title, title: title}" data-toggle="tooltip" data-placement="bottom" class="img-rounded wikipedia-image"></a>
         </li>
       </ul>
     </div>
@@ -253,7 +273,7 @@
       </h1>
       <ul data-bind="foreach: googleMarkers" id="google-container">
         <li class="grid-item">
-          <a href="#" data-bind="selectMarker: {position: $index, markerList: 'googlePlaces'}">
+          <a href="#" data-bind="selectMarker: {position: id, markerList: 'googlePlaces'}">
             <img data-bind="attr: {src: photo, alt: title, title: title}" data-toggle="tooltip" data-placement="bottom" class="img-rounded">
           </a>
         </li>
@@ -271,7 +291,7 @@
       </h1>
       <ul data-bind="foreach: flickrMarkers" class="grid" id="flickr-container">
         <li class="grid-item">
-          <a href="#" data-bind="selectMarker: {position: $index, markerList: 'flickr'}">
+          <a href="#" data-bind="selectMarker: {position: id, markerList: 'flickr'}">
             <img data-bind="attr: {src: url, alt: title, title: title}" class="img-rounded flickr-image" data-toggle="tooltip" data-placement="bottom">
           </a>
         </li>
