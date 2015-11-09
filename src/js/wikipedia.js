@@ -1,4 +1,4 @@
-define(['knockout', 'viewModel', 'TweenLite', 'Ease', 'getMap'], function(ko, viewModel, TweenLite) {
+define(['knockout', 'viewModel', 'TweenLite', 'imagesloaded', 'Ease', 'getMap'], function(ko, viewModel, TweenLite, imagesloaded) {
   window.markerList.wikipedia = [];
 
   // marker image properties
@@ -24,7 +24,7 @@ define(['knockout', 'viewModel', 'TweenLite', 'Ease', 'getMap'], function(ko, vi
     // check for an image
     if (image) {
       url = image.source;
-      contentString += '<img src="' + url + '" alt="wikipedia image">';
+      contentString += '<div class="infoWindowContent"><img class="infoWindowImage" src="' + url + '" alt="wikipedia image"></div>';
     }
 
     // these properties go into the knockout observable array
@@ -85,6 +85,18 @@ define(['knockout', 'viewModel', 'TweenLite', 'Ease', 'getMap'], function(ko, vi
   function completeMarker(marker) {
     window.infowindow.open(map, marker);
     markerImage = new WikipediaMarker();
+
+    // check for images loading properly
+    var imageLoad = imagesloaded('.infoWindowContent');
+    imageLoad.on('progress',  function(instance, image) {
+      if (!image.isLoaded) {
+        console.log(image.img.src + ' failed to load');
+        image.img.src = 'img/missing.svg';
+        image.img.alt = 'image failed to load';
+        image.img.title = 'image failed to load';
+        image.img.width = 75;
+      }
+    });
   }
 
   // reset markers to original size

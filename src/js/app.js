@@ -64,7 +64,19 @@ define([
     wikipedia.searchNearby(lat, long).then(function() {
       viewModel.wikipediaLoaded(true);
       viewModel.wikipediaActive(true);
-      imagesloaded('#wikipedia-container', function() {
+
+      var wikiImgLoad = imagesloaded('#wikipedia-container');
+
+      wikiImgLoad.on('progress', function(instance, image) {
+        if (!image.isLoaded) {
+          console.log(image.img.src + ' failed to load');
+          image.img.src = 'img/missing.svg';
+          image.img.alt = 'image failed to load';
+          image.img.title = 'image failed to load';
+        }
+      });
+
+      wikiImgLoad.on('always', function() {
         new Packery('#wikipedia-container', {
           // options
           itemSelector: '.grid-item',
@@ -72,6 +84,7 @@ define([
         });
 
         $('#wikipedia-container [data-toggle="tooltip"]').tooltip();
+        console.log('wikipedia images loaded');
       });
     });
 
@@ -86,13 +99,25 @@ define([
       viewModel.googleLoaded(true);
       viewModel.googlePlacesActive(true);
 
-      imagesloaded('#google-container', function() {
+      var googleImgLoad = imagesloaded('#google-container');
+
+      googleImgLoad.on('progress', function(instance, image) {
+        if (!image.isLoaded) {
+          console.log(image.img.src + ' failed to load');
+          image.img.src = 'img/missing.svg';
+          image.img.alt = 'image failed to load';
+          image.img.title = 'image failed to load';
+        }
+      });
+
+      googleImgLoad.on('always', function() {
         new Packery('#google-container', {
           // options
           itemSelector: '.grid-item',
           gutter: 10,
         });
         $('#google-container [data-toggle="tooltip"]').tooltip();
+        console.log('google images loaded');
       });
     });
 
@@ -101,7 +126,18 @@ define([
       viewModel.flickrLoaded(true);
       viewModel.flickrActive(true);
 
-      imagesloaded('#flickr-container', function() {
+      var flickrImgLoad = imagesloaded('#flickr-container');
+
+      flickrImgLoad.on('progress', function(instance, image) {
+        if (!image.isLoaded) {
+          console.log(image.img.src + ' failed to load');
+          image.img.src = 'img/missing.svg';
+          image.img.alt = 'image failed to load';
+          image.img.title = 'image failed to load';
+        }
+      });
+
+      flickrImgLoad.on('always', function() {
         new Packery('#flickr-container', {
           // options
           itemSelector: '.grid-item',
@@ -109,6 +145,7 @@ define([
         });
 
         $('#flickr-container [data-toggle="tooltip"]').tooltip();
+        console.log('flickr images loaded');
       });
     });
   }; // end services

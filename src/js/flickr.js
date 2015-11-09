@@ -1,4 +1,4 @@
-define(['knockout', 'viewModel', 'jquery', 'TweenLite', 'keys', 'Ease', 'getMap'], function(ko, viewModel, $, TweenLite, keys) {
+define(['knockout', 'viewModel', 'jquery', 'TweenLite', 'keys', 'imagesloaded', 'Ease', 'getMap'], function(ko, viewModel, $, TweenLite, keys, imagesloaded) {
   var url  = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + keys.flickrKey + '&has_geo=1&radius=2&radius_units=mi&extras=geo%2Curl_t%2C+url_s&format=json&nojsoncallback=1&per_page=100';
 
   // formats we aren't using at the moment
@@ -23,8 +23,8 @@ define(['knockout', 'viewModel', 'jquery', 'TweenLite', 'keys', 'Ease', 'getMap'
   var markerImage = new FlickrMarker();
 
   function createMarker(id, name, place, url) {
-    var contentString = '<div>' + name + '</div>';
-    contentString += '<img src="' + url.thumb + '" alt="flickr image">';
+    var contentString = '<div class="infoWindowContent"><div>' + name + '</div>';
+    contentString += '<img class="infoWindowImage" src="' + url.thumb + '" alt="flickr image"></div>';
 
     // these properties go into the knockout observable array
     var entry = {
@@ -83,6 +83,18 @@ define(['knockout', 'viewModel', 'jquery', 'TweenLite', 'keys', 'Ease', 'getMap'
   function completeMarker(marker) {
     window.infowindow.open(map, marker);
     markerImage = new FlickrMarker();
+
+    // check for images loading properly
+    var imageLoad = imagesloaded('.infoWindowContent');
+    imageLoad.on('progress',  function(instance, image) {
+      if (!image.isLoaded) {
+        console.log(image.img.src + ' failed to load');
+        image.img.src = 'img/missing.svg';
+        image.img.alt = 'image failed to load';
+        image.img.title = 'image failed to load';
+        image.img.width = 75;
+      }
+    });
   }
 
   // reset markers to original size

@@ -1,4 +1,4 @@
-define(['knockout', 'viewModel', 'TweenLite', 'Ease', 'getMap'], function(ko, viewModel, TweenLite) {
+define(['knockout', 'viewModel', 'TweenLite', 'imagesloaded', 'Ease', 'getMap'], function(ko, viewModel, TweenLite, imagesloaded) {
   window.markerList.googlePlaces = [];
 
   // marker image properties
@@ -49,8 +49,8 @@ define(['knockout', 'viewModel', 'TweenLite', 'Ease', 'getMap'], function(ko, vi
         window.infowindow.close();
         resetMarkers();
         var _this = this;
-        var contentString = '<div><img src="' + _this.placeIcon +  '" width="20"><p>' + _this.title + '</p>';
-        contentString += '<p><img src="' + _this.photo + '"></p>';
+        var contentString = '<div class="infoWindowContent"><img src="' + _this.placeIcon +  '" width="20"><p>' + _this.title + '</p>';
+        contentString += '<p><img <img class="infoWindowImage"src="' + _this.photo + '"></p></div>';
         window.map.panTo(_this.position);
         window.infowindow.setContent(contentString);
 
@@ -84,6 +84,18 @@ define(['knockout', 'viewModel', 'TweenLite', 'Ease', 'getMap'], function(ko, vi
   function completeMarker(marker) {
     window.infowindow.open(map, marker);
     markerImage = new GoogleMarker();
+
+    // check for images loading properly
+    var imageLoad = imagesloaded('.infoWindowContent');
+    imageLoad.on('progress',  function(instance, image) {
+      if (!image.isLoaded) {
+        console.log(image.img.src + ' failed to load');
+        image.img.src = 'img/missing.svg';
+        image.img.alt = 'image failed to load';
+        image.img.title = 'image failed to load';
+        image.img.width = 75;
+      }
+    });
   }
 
   // reset markers to original size
