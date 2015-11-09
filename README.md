@@ -22,9 +22,17 @@ The interactive map pulls local data from Wikipedia, Foursquare, Flickr and Goog
 
 [http://rewfergu.github.io/neighborhood-map/](http://rewfergu.github.io/neighborhood-map/)
 
+## API keys
+This project uses several APIs that require IDs in order to run. The IDs have been intentionally left out of this repo and need to be put back in order to run properly.  
+
 ## To Run
 
 1. Clone the project
 2. 'npm install' to load in the modules
 3. 'cd src'
-4. 'python -m SimpleHTTPServer 8000'
+4. insert api keys
+5. 'python -m SimpleHTTPServer 8000'
+
+## gulp tasks
+1. gulp watch - update css
+2. gulp build - minify html/css/js
